@@ -342,7 +342,6 @@ footer .sig{font-family:var(--serif);font-size:1.2rem;font-style:italic}
       <circle class="route-stop" cx="620" cy="462" r="9"/>
     </svg>
     <div class="hero-in">
-      <p class="kicker">Case de ensino da disciplina Gestão de Crise, Imagem e Reputação Corporativa, MBA em Gestão Empresarial, FGV Porto Alegre, 2026</p>
       <h1>Ligeira Logística Urbana</h1>
     </div>
   </section>
@@ -350,14 +349,13 @@ footer .sig{font-family:var(--serif);font-size:1.2rem;font-style:italic}
   <section class="section">
     <div class="prose">
       <p class="lede">A Ligeira nasceu em 2018 entregando as encomendas das lojas de moda de Porto Alegre e cresceu no ritmo do e-commerce gaúcho. Hoje, cada entrega feita em poucas horas envolve clientes, entregadores, empregados, credores, vizinhos e as próprias cidades da Região Metropolitana, e nem todos ganham com ela na mesma medida.</p>
-      <p>Ao longo dos capítulos, o case acompanha os fundadores da Ligeira, Beatriz Nakamura e Diego Rocha, enquanto eles tentam responder à pergunta que atravessa o curso:</p>
+      <p>Esta é a história de Beatriz Nakamura e Diego Rocha, os fundadores da Ligeira, e da pergunta que eles vão ter de responder:</p>
       <p class="pull">Como uma empresa constrói, protege e recupera a confiança de quem depende dela?</p>
 
       <h2>Capítulos</h2>
       <ol class="chapters">
         <li data-cap="1"><span class="cn">Capítulo 1</span><span class="ct">Os stakeholders da Ligeira</span></li>
       </ol>
-      <p class="note">A Ligeira e todos os seus personagens são fictícios. Os dados sobre a região e o setor são ilustrativos.</p>
     </div>
   </section>
 </div>
@@ -390,30 +388,27 @@ footer .sig{font-family:var(--serif);font-size:1.2rem;font-style:italic}
   <section class="section" id="grupo">
     <div class="round">
       <div class="round-head">
-        <h2>Qual é o seu grupo?</h2>
-        <div class="task">Cada grupo trabalha num único aparelho. Escolham o número do grupo antes de começar: as respostas de cada grupo ficam separadas.</div>
+        <h2>Grupo</h2>
       </div>
       <div class="groups" id="groups"></div>
       <p class="gnow" id="gnow" aria-live="polite"></p>
     </div>
   </section>
 
-  <div id="rounds-locked" class="round"><p class="locked-msg">Escolham o grupo acima para liberar as rodadas.</p></div>
+  <div id="rounds-locked"></div>
   <div id="rounds">
   <!-- RODADA 1 -->
   <section class="section" id="rodada-1">
     <div class="round">
       <div class="round-head">
-        <h2>Rodada 1: a matriz</h2>
-        <div class="task">Posicionem cada um dos 12 stakeholders da Ligeira na matriz de poder e interesse.</div>
+        <h2>A matriz de poder e interesse</h2>
       </div>
       <div class="matrix-wrap" data-matrix="r1"></div>
       <div class="row-actions">
-        <button class="btn ghost" type="button" data-reset="r1">Limpar a matriz</button>
-        <button class="btn" type="button" id="show-lock">Ver o gabarito</button>
+        <button class="btn" type="button" id="show-lock" hidden>Gabarito</button>
       </div>
       <div class="lock hidden" id="lock">
-        <label for="code">Código do professor</label>
+        <label for="code">Código</label>
         <input id="code" type="password" autocomplete="off">
         <button class="btn" type="button" id="unlock">Abrir</button>
         <span class="err" id="lock-err" role="alert"></span>
@@ -426,18 +421,13 @@ footer .sig{font-family:var(--serif);font-size:1.2rem;font-style:italic}
   <section class="section" id="rodada-3">
     <div class="round">
       <div class="round-head">
-        <h2>Rodada 2: o evento</h2>
-        <div class="task">Abram o envelope do seu grupo quando o professor der a senha. Diante do acontecimento: algum stakeholder muda de lugar na matriz de vocês? Para onde, e por quê? Movam na matriz o que mudou.</div>
+        <h2>O acontecimento</h2>
       </div>
       <div class="envelopes" id="envelopes"></div>
       <div id="event-area" class="hidden">
         <article class="event" id="event-text"></article>
         <h3>A matriz depois do evento</h3>
-        <p class="note">A matriz começa igual à da rodada 1. Movam apenas o que mudou.</p>
         <div class="matrix-wrap" data-matrix="r3"></div>
-        <div class="row-actions">
-          <button class="btn ghost" type="button" id="recopy">Recomeçar a partir da matriz da rodada 1</button>
-        </div>
       </div>
     </div>
   </section>
@@ -447,16 +437,12 @@ footer .sig{font-family:var(--serif);font-size:1.2rem;font-style:italic}
     <div class="round">
       <div class="round-head">
         <h2 id="sum-title">Antes e depois</h2>
-        <p class="note">Esta é a tela para a apresentação de dois minutos do grupo.</p>
       </div>
       <div id="summary"></div>
     </div>
   </section>
 
   </div>
-  <section class="section">
-    <div class="prose"><p class="note">A Ligeira, a Lume, a Minuano Frotas e todos os personagens são fictícios. Os dados sobre a região e o setor são ilustrativos.</p></div>
-  </section>
   <!-- PROFESSOR -->
   <section class="section hidden" id="professor">
     <div class="round">
@@ -593,7 +579,6 @@ function buildMatrix(key){
   const wrap = document.querySelector(`[data-matrix="${key}"]`);
   wrap.innerHTML = `
     <div class="tray" data-q="tray">
-      <p class="tray-label">Ainda sem posição. Toque num stakeholder e depois no quadrante (ou arraste).</p>
       <div class="chips"></div>
     </div>
     <p class="status" aria-live="polite"></p>
@@ -635,7 +620,7 @@ function renderMatrix(key){
     target.appendChild(b);
   });
   const st = wrap.querySelector(".status");
-  st.textContent = sel[key] ? `Agora toque no quadrante para posicionar: ${byId(sel[key]).n}.` : `${placed} de ${S.length} stakeholders posicionados.`;
+  st.textContent = "";
   wrap.querySelector(".tray").classList.toggle("hidden", placed===S.length && !sel[key]);
 }
 function place(key,id,q){
@@ -650,9 +635,9 @@ function renderEnvelopes(){
   if(!group){ box.innerHTML=""; return; }
   const opened = state.ev===group;
   box.innerHTML = `<button type="button" class="env ${opened?"chosen":""}" id="env-btn" ${opened?"disabled":""}>
-      <strong>Envelope do Grupo ${group}</strong><span>${opened?"Envelope aberto":"Toque para abrir"}</span></button>
+      <strong>Envelope do Grupo ${group}</strong></button>
     <div class="envlock hidden" id="envlock">
-      <label for="env-pw">Senha do envelope</label>
+      <label for="env-pw">Senha</label>
       <input id="env-pw" type="password" autocomplete="off" autocapitalize="none">
       <button class="btn" type="button" id="env-ok">Abrir</button>
       <span class="err" id="env-err" role="alert"></span>
@@ -663,7 +648,7 @@ function renderEnvelopes(){
   const tryOpen = async ()=>{
     const v = pw.value.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
     const h = await sha("ligeira:"+v);
-    if(h!==ENV_HASH){ err.textContent="Senha incorreta. Confiram com o professor."; pw.select(); return; }
+    if(h!==ENV_HASH){ err.textContent="Senha incorreta."; pw.select(); return; }
     state.ev=group;
     if(Object.keys(state.r3).length===0) state.r3 = Object.assign({}, state.r1);
     save(); renderEvent();
@@ -680,10 +665,6 @@ function renderEvent(){
   area.classList.remove("hidden");
   renderMatrix("r3"); renderSummary();
 }
-document.getElementById("recopy").addEventListener("click",()=>{
-  if(!confirm("Copiar de novo a matriz da rodada 1?")) return;
-  state.r3 = Object.assign({}, state.r1); save(); renderEvent();
-});
 
 /* ---------- resumo ---------- */
 function qlist(map, compare){
@@ -694,10 +675,10 @@ function qlist(map, compare){
 function renderSummary(){
   const box=document.getElementById("summary");
   const hasR1 = Object.keys(state.r1).length>0;
-  if(!hasR1){ box.innerHTML = `<p class="note">O resumo aparece aqui assim que o grupo começar a posicionar os stakeholders na rodada 1.</p>`; return; }
+  if(!hasR1){ box.innerHTML = ""; return; }
   const ev = state.ev ? EVENTS.find(e=>e.g===state.ev) : null;
   let html = `<div class="compare"><div><h3>Antes do evento</h3>${qlist(state.r1)}</div>` +
-    (ev?`<div><h3>Depois: ${ev.t}</h3>${qlist(state.r3, state.r1)}</div>`:`<div><h3>Depois do evento</h3><p class="note">Abram o envelope na rodada 2.</p></div>`) + `</div>`;
+    (ev?`<div><h3>Depois: ${ev.t}</h3>${qlist(state.r3, state.r1)}</div>`:`<div><h3>Depois do evento</h3></div>`) + `</div>`;
   box.innerHTML = html;
 }
 
@@ -718,11 +699,12 @@ function renderAnswers(){
   document.getElementById("relock").addEventListener("click",()=>{ unlocked=false; saveProf(); location.reload(); });
   renderMatrix("r1");
 }
+if(new URLSearchParams(location.search).has("prof")) document.getElementById("show-lock").hidden=false;
 document.getElementById("show-lock").addEventListener("click",()=>{ const l=document.getElementById("lock"); l.classList.toggle("hidden"); if(!l.classList.contains("hidden")) document.getElementById("code").focus(); });
 function tryUnlock(){
   const v=document.getElementById("code").value.trim();
   if(v===PROF_CODE){ unlocked=true; saveProf(); renderAnswers(); renderLiberacao(); }
-  else document.getElementById("lock-err").textContent="Código incorreto. Confira com o professor.";
+  else document.getElementById("lock-err").textContent="Código incorreto.";
 }
 document.getElementById("unlock").addEventListener("click", tryUnlock);
 document.getElementById("code").addEventListener("keydown", e=>{ if(e.key==="Enter") tryUnlock(); });
@@ -779,7 +761,7 @@ function renderGroups(){
     group=n; try{ localStorage.setItem(BASE+"-grupo", String(n)); }catch(e){}
     load(); sel.r1=null; sel.r3=null; renderAll();
   }));
-  document.getElementById("gnow").textContent = group ? `Vocês estão trabalhando como Grupo ${group}.` : "";
+  document.getElementById("gnow").textContent = "";
   document.getElementById("rounds").classList.toggle("hidden", !group);
   document.getElementById("rounds-locked").classList.toggle("hidden", !!group);
   document.getElementById("sum-title").textContent = group ? `Antes e depois: Grupo ${group}` : "Antes e depois";
