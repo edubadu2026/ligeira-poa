@@ -405,7 +405,7 @@ footer .sig{font-family:var(--serif);font-size:1.2rem;font-style:italic}
       </div>
       <div class="matrix-wrap" data-matrix="r1"></div>
       <div class="row-actions">
-        <button class="btn" type="button" id="show-lock" hidden>Gabarito</button>
+        <button class="btn ghost" type="button" id="show-lock">Gabarito</button>
       </div>
       <div class="lock hidden" id="lock">
         <label for="code">Código</label>
@@ -699,7 +699,6 @@ function renderAnswers(){
   document.getElementById("relock").addEventListener("click",()=>{ unlocked=false; saveProf(); location.reload(); });
   renderMatrix("r1");
 }
-if(new URLSearchParams(location.search).has("prof")) document.getElementById("show-lock").hidden=false;
 document.getElementById("show-lock").addEventListener("click",()=>{ const l=document.getElementById("lock"); l.classList.toggle("hidden"); if(!l.classList.contains("hidden")) document.getElementById("code").focus(); });
 function tryUnlock(){
   const v=document.getElementById("code").value.trim();
