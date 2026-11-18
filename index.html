@@ -355,7 +355,7 @@ footer .sig{font-family:var(--serif);font-size:1.2rem;font-style:italic}
 
       <h2>Capítulos</h2>
       <ol class="chapters">
-        <li data-cap="1"><span class="cn">Capítulo 1 · Do lucro ao stakeholder</span><span class="ct">Os stakeholders da Ligeira</span></li>
+        <li data-cap="1"><span class="cn">Capítulo 1</span><span class="ct">Os stakeholders da Ligeira</span></li>
       </ol>
       <p class="note">A Ligeira e todos os seus personagens são fictícios. Os dados sobre a região e o setor são ilustrativos.</p>
     </div>
@@ -366,7 +366,7 @@ footer .sig{font-family:var(--serif);font-size:1.2rem;font-style:italic}
 <div id="view-capitulo-1" class="view hidden">
   <section class="chap-head">
     <div class="in">
-      <p class="num">Capítulo 1 · Do lucro ao stakeholder</p>
+      <p class="num">Capítulo 1</p>
       <h1>Os stakeholders da Ligeira</h1>
     </div>
   </section>
@@ -377,9 +377,7 @@ footer .sig{font-family:var(--serif);font-size:1.2rem;font-style:italic}
       <p>A divisão de tarefas sempre foi natural. Beatriz cuidava de tudo o que acontecia na rua, ou seja, clientes, galpão, entregadores e dinheiro. Diego cuidava de tudo o que acontecia na tela, o aplicativo, o algoritmo e os dados. Nenhum dos dois jamais tinha gerido uma empresa. Enquanto a Ligeira era pequena, isso não fez falta.</p>
       <p>A pandemia triplicou o volume de entregas. Em <strong>2023</strong> veio o contrato que mudou a escala da empresa. A Lume Varejo, uma varejista de moda online nascida em Porto Alegre, passou a usar a Ligeira nas entregas de toda a Região Metropolitana. A Ligeira saiu da capital e passou a rodar também por Canoas, Esteio, São Leopoldo, Novo Hamburgo, Gravataí e Cachoeirinha.</p>
       <p>No início de 2026, a Ligeira fazia cerca de <strong>1.500 entregas por dia</strong> na região. Faturava <strong>R$ 4,7 milhões por ano</strong>, tinha <strong>19 empregados</strong> e contava com cerca de <strong>220 entregadores cadastrados</strong>.</p>
-      <p>Mas os doze meses anteriores tinham trazido uma sequência de problemas que ninguém previra. A Lume ameaçou reduzir o volume depois de uma semana de atrasos. Uma paralisação de entregadores atrasou <strong>2 mil entregas</strong>. Os moradores vizinhos ao galpão fizeram um abaixo-assinado à prefeitura. Dois desenvolvedores saíram para empresas maiores. E o banco pediu garantias adicionais para renovar o capital de giro.</p>
-      <p class="pull">Cada problema parecia isolado. Beatriz começou a desconfiar de que não eram.</p>
-      <p>Foi com essa inquietação que ela se matriculou no MBA em Gestão Empresarial da FGV. Na disciplina de Gestão de Crise, Imagem e Reputação Corporativa, entendeu o que ligava todos aqueles problemas. No Capitalismo 4.0, uma empresa só consegue evitar riscos desnecessários e potencializar o seu lucro se souber gerir os seus stakeholders. É essa gestão que impede que o crescimento seja feito à custa dos outros, e que torna o próprio Capitalismo 4.0 possível. Na mesma disciplina, Beatriz aprendeu a matriz de poder e interesse. Voltou para a Ligeira decidida a usá-la. Antes de qualquer outra decisão, queria saber quem era quem.</p>
+      <p>Em 2025, Beatriz se matriculou no MBA em Gestão Empresarial da FGV. Na disciplina de Gestão de Crise, Imagem e Reputação Corporativa, entendeu que a Ligeira crescia num mundo diferente daquele em que muitas empresas aprenderam a crescer. Houve um tempo em que só o acionista tinha voz. Depois, os stakeholders passaram a ter voz também. Hoje, eles nunca tiveram tanto poder de fazer essa voz ser ouvida. Na mesma disciplina, Beatriz aprendeu a matriz de poder e interesse e voltou para a Ligeira decidida a usá-la. Antes de qualquer outra decisão, queria saber quem era quem.</p>
     </div>
   </section>
 
@@ -568,7 +566,7 @@ const EVENTS = [
 
 /* ---------- estado ---------- */
 const BASE = "ligeira-poa-modulo-1";
-const ENV_HASH = {"1": "81fc850323e4c4f712d26ffcf21b7006b9d33ee19fed8fee6030fc1bddcdf027", "2": "021eb88f5033acc1e870e6b248aeb83241c2a4e54e476b6ad906f5ed4221c064", "3": "67c68a11b8263785fd2ec0d9c5e02758ec7a59d73a6ea5b80562492c10bf993f", "4": "b8eeeb4a23d25730d0b548346a3af9e295b8761498848d192014a41798e53cd9", "5": "681546c80b037921f4ae0c9d11bc1a8c0f516fc51bf7eecb3bfb3ef4ff0b24c8"};
+const ENV_HASH = "69e7c1d057d6cb56eab5a0b2314afb3f45ebc412109a19ee36d1a29047986bdd";
 let group = null;
 try{ const g = localStorage.getItem(BASE+"-grupo"); if(g) group = +g; }catch(e){}
 let unlocked = false;
@@ -664,8 +662,8 @@ function renderEnvelopes(){
   document.getElementById("env-btn").addEventListener("click",()=>{ lockBox.classList.toggle("hidden"); if(!lockBox.classList.contains("hidden")) pw.focus(); });
   const tryOpen = async ()=>{
     const v = pw.value.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
-    const h = await sha("ligeira-"+group+":"+v);
-    if(h!==ENV_HASH[String(group)]){ err.textContent="Senha incorreta. Confiram com o professor."; pw.select(); return; }
+    const h = await sha("ligeira:"+v);
+    if(h!==ENV_HASH){ err.textContent="Senha incorreta. Confiram com o professor."; pw.select(); return; }
     state.ev=group;
     if(Object.keys(state.r3).length===0) state.r3 = Object.assign({}, state.r1);
     save(); renderEvent();
@@ -715,7 +713,7 @@ function renderAnswers(){
   document.getElementById("professor").classList.remove("hidden");
   document.getElementById("prof-notes").innerHTML = `<div class="table-scroll"><table><thead><tr><th>Evento</th><th>Movimento esperado</th><th>Ponto de discussão</th></tr></thead><tbody>` +
    EVENTS.map(e=>`<tr><td>${e.g}. ${e.t}</td><td>${e.m}</td><td>${e.d}</td></tr>`).join("") + `</tbody></table></div>
-   <p class="note" style="margin-top:1rem"><strong>Para a plenária:</strong> mudando de lugar ou não, esses stakeholders passaram a pesar de outro jeito. Quase nenhum derrubaria a Ligeira sozinho: a voz funciona juntando-se a outros iguais ou acionando quem já tem poder. Senhas dos envelopes: Grupo 1 <em>rota</em>, Grupo 2 <em>galpao</em>, Grupo 3 <em>pacote</em>, Grupo 4 <em>entrega</em>, Grupo 5 <em>coleta</em>.</p>
+   <p class="note" style="margin-top:1rem"><strong>Para a plenária:</strong> mudando de lugar ou não, esses stakeholders passaram a pesar de outro jeito. Quase nenhum derrubaria a Ligeira sozinho: a voz funciona juntando-se a outros iguais ou acionando quem já tem poder. Senha dos envelopes: <em>rota</em>.</p>
    <div class="row-actions"><button class="btn ghost" type="button" id="relock">Fechar o gabarito</button></div>`;
   document.getElementById("relock").addEventListener("click",()=>{ unlocked=false; saveProf(); location.reload(); });
   renderMatrix("r1");
