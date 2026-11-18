@@ -570,7 +570,7 @@ const ENV_HASH = "69e7c1d057d6cb56eab5a0b2314afb3f45ebc412109a19ee36d1a29047986b
 let group = null;
 try{ const g = localStorage.getItem(BASE+"-grupo"); if(g) group = +g; }catch(e){}
 let unlocked = false;
-try{ unlocked = localStorage.getItem(BASE+"-prof")==="1"; }catch(e){}
+try{ localStorage.removeItem(BASE+"-prof"); }catch(e){} /* o gabarito nunca fica aberto depois de recarregar a página */
 function blank(){ return {r1:{}, ev:null, r3:{}}; }
 let state = blank();
 function load(){
@@ -579,7 +579,7 @@ function load(){
   try{ const raw = localStorage.getItem(`${BASE}-g${group}`); if(raw) state = Object.assign(blank(), JSON.parse(raw)); }catch(e){}
 }
 function save(){ if(!group) return; try{ localStorage.setItem(`${BASE}-g${group}`, JSON.stringify(state)); }catch(e){} }
-function saveProf(){ try{ localStorage.setItem(BASE+"-prof", unlocked?"1":"0"); }catch(e){} }
+function saveProf(){}
 load();
 const sel = {r1:null, r3:null};
 const byId = id => S.find(s=>s.id===id);
