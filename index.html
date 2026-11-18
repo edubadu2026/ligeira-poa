@@ -145,6 +145,19 @@ h3{font-family:var(--sans);font-weight:700;font-size:1.15rem;margin:0 0 .4em}
 .env strong{display:block;font-size:1.05rem}
 .env span{font-size:.85rem;color:var(--ink-2)}
 .env.chosen{background:var(--yellow)}
+.envelopes{display:block}
+.env2{position:relative;display:block;width:min(100%,440px);aspect-ratio:16/10;margin:.5rem 0 0;padding:0;border:0;border-radius:6px;background:#FBF8EF;cursor:pointer;font:inherit;perspective:1100px;box-shadow:0 1px 0 rgba(27,37,48,.08),0 18px 40px -18px rgba(27,37,48,.55);transition:transform .25s ease,box-shadow .25s ease}
+.env2:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 1px 0 rgba(27,37,48,.08),0 24px 46px -18px rgba(27,37,48,.6)}
+.env2::before{content:"";position:absolute;inset:0;border-radius:6px;pointer-events:none;background:linear-gradient(to top right,transparent calc(50% - 1px),rgba(27,37,48,.18) 50%,transparent calc(50% + 1px)) left bottom/50% 62% no-repeat,linear-gradient(to top left,transparent calc(50% - 1px),rgba(27,37,48,.18) 50%,transparent calc(50% + 1px)) right bottom/50% 62% no-repeat}
+.env2 .flap{position:absolute;left:0;right:0;top:0;height:58%;background:var(--ink);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top center;transition:transform .7s cubic-bezier(.5,0,.2,1),background .7s ease;z-index:2;border-radius:6px 6px 0 0}
+.env2 .seal{position:absolute;left:50%;top:58%;width:58px;height:58px;margin:-30px 0 0 -29px;border-radius:50%;background:var(--yellow);color:var(--ink);font-family:var(--serif);font-weight:750;font-size:1.7rem;display:flex;align-items:center;justify-content:center;z-index:3;box-shadow:0 0 0 5px #FBF8EF,0 6px 14px rgba(0,0,0,.25);transition:opacity .3s ease,transform .3s ease}
+.env2 .lbl{position:absolute;left:1.2rem;bottom:1rem;font-family:var(--sans);font-weight:700;font-size:.95rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);z-index:1}
+.env2.open{cursor:default;background:#F1EEE5;margin-top:calc(min(100%,440px) * .3625 + .75rem)}
+.env2.open .flap{transform:rotateX(180deg);background:#C9CED4}
+.env2.open .seal{opacity:0;transform:scale(.6)}
+#event-area .event{background:#fff;border-left:0;border-top:6px solid var(--yellow);border-radius:4px;padding:1.6rem 1.8rem;box-shadow:0 18px 40px -22px rgba(27,37,48,.5);animation:carta .7s cubic-bezier(.2,.7,.2,1) both}
+@keyframes carta{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.env2,.env2 .flap,.env2 .seal{transition:none}#event-area .event{animation:none}}
 .envlock{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;margin-top:1rem}
 .envlock input{font:inherit;padding:.6rem .8rem;border:2px solid var(--ink);border-radius:4px;min-width:12rem;background:#fff}
 .envlock .err{color:#B3261E;font-size:.9rem}
@@ -432,15 +445,6 @@ footer .sig{font-family:var(--serif);font-size:1.2rem;font-style:italic}
     </div>
   </section>
 
-  <!-- RESUMO -->
-  <section class="section" id="resumo">
-    <div class="round">
-      <div class="round-head">
-        <h2 id="sum-title">Antes e depois</h2>
-      </div>
-      <div id="summary"></div>
-    </div>
-  </section>
 
   </div>
   <!-- PROFESSOR -->
@@ -634,8 +638,11 @@ function renderEnvelopes(){
   const box=document.getElementById("envelopes");
   if(!group){ box.innerHTML=""; return; }
   const opened = state.ev===group;
-  box.innerHTML = `<button type="button" class="env ${opened?"chosen":""}" id="env-btn" ${opened?"disabled":""}>
-      <strong>Envelope do Grupo ${group}</strong></button>
+  box.innerHTML = `<button type="button" class="env2 ${opened?"open":""}" id="env-btn" ${opened?"disabled":""} aria-label="Envelope do Grupo ${group}">
+      <span class="flap" aria-hidden="true"></span>
+      <span class="seal" aria-hidden="true">${group}</span>
+      <span class="lbl">Grupo ${group}</span>
+    </button>
     <div class="envlock hidden" id="envlock">
       <label for="env-pw">Senha</label>
       <input id="env-pw" type="password" autocomplete="off" autocapitalize="none">
@@ -673,6 +680,7 @@ function qlist(map, compare){
     return `<dt>${QUADS[q].name}</dt><dd>${names.length?names.join(", "):"—"}</dd>`; }).join("")}</dl>`;
 }
 function renderSummary(){
+  if(!document.getElementById("summary")) return;
   const box=document.getElementById("summary");
   const hasR1 = Object.keys(state.r1).length>0;
   if(!hasR1){ box.innerHTML = ""; return; }
@@ -763,7 +771,6 @@ function renderGroups(){
   document.getElementById("gnow").textContent = "";
   document.getElementById("rounds").classList.toggle("hidden", !group);
   document.getElementById("rounds-locked").classList.toggle("hidden", !!group);
-  document.getElementById("sum-title").textContent = group ? `Antes e depois: Grupo ${group}` : "Antes e depois";
 }
 function renderAll(){
   renderGroups(); renderMatrix("r1"); renderEvent(); renderSummary(); renderAnswers();
