@@ -517,6 +517,34 @@ footer .sig{font-family:var(--serif);font-size:1.2rem;font-style:italic}
   </section>
 
   <section class="section">
+    <div class="prose">
+      <h2>Um dia na Ligeira</h2>
+      <p class="lede">Às cinco da manhã, a luz do galpão do Partenon já está acesa. O galpão não é da Ligeira: é alugado, com contrato até o fim do ano que vem. Dentro dele, o que é da empresa cabe numa lista curta: as bancadas de triagem, as prateleiras de metal, as impressoras de etiquetas, os leitores de código de barras e uma pilha de caixas de papelão dobradas no canto.</p>
+      <p>O turno da madrugada separa os pacotes que vão sair pela manhã. O líder de turno, que está na Ligeira desde o primeiro ano, não precisa olhar a etiqueta para saber para que bairro vai cada caixa. Foi ele quem inventou o jeito de organizar as bancadas por região, e foi ele quem ensinou o método a cada pessoa que entrou depois. Nada disso está escrito em lugar nenhum.</p>
+      <p>Às sete, os entregadores começam a chegar. As motos, as bicicletas e os celulares são deles. As mochilas térmicas amarelas com o nome da Ligeira, não: a empresa compra e empresta. Alguns rodam para a Ligeira desde que eram só três. Conhecem a portaria de cada condomínio, o porteiro que só atende pelo interfone dos fundos e a loja que nunca está pronta antes das dez.</p>
+      <p>Na sala ao lado, Diego abre o computador. O aplicativo que distribui as corridas roda na nuvem, em servidores que a Ligeira aluga por mês. O algoritmo que decide qual entregador leva qual pacote, e em que ordem, foi escrito por ele, linha por linha, ao longo de sete anos, e só ele conhece o código inteiro. O algoritmo aprende com tudo o que já aconteceu: a Ligeira guarda o registro de cada entrega feita desde 2018, com o endereço, o horário, o tempo de cada trecho e o que deu errado.</p>
+      <p>No meio da manhã, Beatriz atende o telefone da Lume. O contrato com a varejista vence no fim do ano e responde por quase metade do que a Ligeira fatura. Depois, liga para uma loja do Bom Fim que reclamou de um atraso. A dona é cliente desde 2018. Reclama, mas não troca: diz que a Ligeira é a única que conhece as clientes dela pelo nome. Quase todas as 25 lojas da carteira chegaram do mesmo jeito, por indicação de outra loja.</p>
+      <p>À tarde, chega a conta mensal: o aluguel do galpão, a locação das vans da Minuano Frotas, os servidores, os salários, a parcela do empréstimo do banco. No fim do mês, o extrato da conta mostra o que sobrou em caixa.</p>
+      <p>Às onze da noite, o último pacote é entregue em Canoas. No aplicativo, o cliente dá cinco estrelas e escreve: “Chegou antes do que prometeram, como sempre.”</p>
+      <div class="envlock" id="c2lock" style="margin-top:3rem">
+        <label for="c2-pw">Senha</label>
+        <input id="c2-pw" type="password" autocomplete="off" autocapitalize="none">
+        <button class="btn" type="button" id="c2-ok">Continuar</button>
+        <span class="err" id="c2-err" role="alert"></span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="view-capitulo-2b" class="view hidden">
+  <section class="chap-head">
+    <div class="in">
+      <p class="num">Capítulo 2 · Reputação</p>
+      <h1>A campanha</h1>
+    </div>
+  </section>
+
+  <section class="section">
     <figure class="kv"><img src="img/campanha.jpg" alt="Campanha da Ligeira: entregue por gente que a gente cuida."></figure>
     <div class="c2top">
       <figure class="post">
@@ -837,13 +865,13 @@ function renderLiberacao(){
 function route(){
   const v = location.hash.replace("#","") || "inicio";
   const ch1 = ["stakeholders","grupo","rodada-1","rodada-3","resumo","professor"];
-  let view = (v.startsWith("capitulo-2") || v==="dilema") ? "capitulo-2" : (v.startsWith("capitulo-1") || ch1.includes(v)) ? "capitulo-1" : "inicio";
-  const nCap = view.startsWith("capitulo-") ? +view.split("-")[1] : 0;
+  let view = (v==="campanha" || v==="dilema") ? (c2Unlocked() ? "capitulo-2b" : "capitulo-2") : v.startsWith("capitulo-2") ? "capitulo-2" : (v.startsWith("capitulo-1") || ch1.includes(v)) ? "capitulo-1" : "inicio";
+  const nCap = view.startsWith("capitulo-") ? parseInt(view.split("-")[1]) : 0;
   if(nCap && !capLiberado(nCap)) view = "inicio";
   renderLiberacao();
   document.querySelectorAll(".view").forEach(el=>el.classList.toggle("hidden", el.id!==`view-${view}`));
-  document.querySelectorAll(".top nav a").forEach(a=>{ if(a.dataset.view===view) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
-  if(v==="inicio"||v==="capitulo-1"||v==="capitulo-2") window.scrollTo(0,0); else { const t=document.getElementById(v); if(t) t.scrollIntoView(); }
+  document.querySelectorAll(".top nav a").forEach(a=>{ if(a.dataset.view===view.replace("capitulo-2b","capitulo-2")) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+  if(v==="inicio"||v==="capitulo-1"||v==="capitulo-2"||v==="campanha") window.scrollTo(0,0); else { const t=document.getElementById(v); if(t) t.scrollIntoView(); }
 }
 window.addEventListener("hashchange", route);
 
@@ -868,6 +896,21 @@ renderAll();
 
 
 /* ---------- capítulo 2 ---------- */
+const C2_HASH = "19b62f07cbac08cac6f314b89a2dafffa3717b712d21c4c5f7c5becd62607091";
+function c2Unlocked(){ if(window._c2===true) return true; try{ return localStorage.getItem(BASE+"-c2")==="1"; }catch(e){ return false; } }
+(function(){
+  const pw=document.getElementById("c2-pw"), err=document.getElementById("c2-err");
+  const go = async ()=>{
+    const v = pw.value.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+    const d = await crypto.subtle.digest("SHA-256", new TextEncoder().encode("ligeira-c2:"+v));
+    const h = [...new Uint8Array(d)].map(x=>x.toString(16).padStart(2,"0")).join("");
+    if(h!==C2_HASH){ err.textContent="Senha incorreta."; pw.select(); return; }
+    window._c2=true; try{ localStorage.setItem(BASE+"-c2","1"); }catch(e){}
+    if(location.hash==="#campanha") route(); else location.hash="#campanha";
+  };
+  document.getElementById("c2-ok").addEventListener("click", go);
+  pw.addEventListener("keydown", e=>{ if(e.key==="Enter") go(); });
+})();
 const DILEMAS2 = [
  {
   "t": "O calor",
