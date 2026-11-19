@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/icone.png">
 <title>Ligeira Logística Urbana</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -158,6 +160,11 @@ h3{font-family:var(--sans);font-weight:700;font-size:1.15rem;margin:0 0 .4em}
 #event-area .event{background:#fff;border-left:0;border-top:6px solid var(--yellow);border-radius:4px;padding:1.6rem 1.8rem;box-shadow:0 18px 40px -22px rgba(27,37,48,.5);animation:carta .7s cubic-bezier(.2,.7,.2,1) both}
 @keyframes carta{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.env2,.env2 .flap,.env2 .seal{transition:none}#event-area .event{animation:none}}
+.hero-logo{margin:0}.hero-logo img{display:block;width:min(560px,80vw);height:auto}
+.hero-tag{font-family:var(--sans);font-weight:600;letter-spacing:.28em;text-transform:uppercase;font-size:.95rem;color:rgba(255,255,255,.75);margin:1.4rem 0 0}
+.cardpic{width:46px;height:46px;border-radius:50%;vertical-align:middle;margin-right:.55rem;object-fit:cover}
+.kv{max-width:1180px;margin:0 auto 3rem;padding:0 1.25rem}
+.kv img{display:block;width:100%;height:auto;border-radius:6px;box-shadow:0 22px 50px -24px rgba(27,37,48,.55)}
 .c2top{max-width:1180px;margin:0 auto;padding:0 1.25rem;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:3rem;align-items:center;font-family:var(--sans)}
 .post{margin:0;background:#fff;border-radius:6px;overflow:hidden;box-shadow:0 22px 50px -24px rgba(27,37,48,.55);max-width:430px}
 .post img{display:block;width:100%;height:auto}
@@ -390,7 +397,8 @@ footer .sig{font-family:var(--serif);font-size:1.2rem;font-style:italic}
       <circle class="route-stop" cx="620" cy="462" r="9"/>
     </svg>
     <div class="hero-in">
-      <h1>Ligeira Logística Urbana</h1>
+      <h1 class="hero-logo"><img src="img/logo-claro-grande.png" alt="Ligeira Logística Urbana"></h1>
+      <p class="hero-tag">Logística urbana · Porto Alegre</p>
     </div>
   </section>
 
@@ -502,6 +510,7 @@ footer .sig{font-family:var(--serif);font-size:1.2rem;font-style:italic}
   </section>
 
   <section class="section">
+    <figure class="kv"><img src="img/campanha.jpg" alt="Campanha da Ligeira: entregue por gente que a gente cuida."></figure>
     <div class="c2top">
       <figure class="post">
         <img src="img/post.jpg" alt="Post da Ligeira no Instagram: Na Ligeira, quem entrega é tratado como gente.">
@@ -647,7 +656,7 @@ const byId = id => S.find(s=>s.id===id);
 
 /* ---------- cartões ---------- */
 document.getElementById("cards").innerHTML = S.map(s=>`
-  <article class="card"><h3><span aria-hidden="true">${s.e}</span>${s.n}</h3><p>${s.t}</p></article>`).join("");
+  <article class="card"><h3>${(s.id==="beatriz"||s.id==="diego")?`<img class="cardpic" src="img/${s.id}.jpg" alt="">`:`<span aria-hidden="true">${s.e}</span>`}${s.n}</h3><p>${s.t}</p></article>`).join("");
 
 /* ---------- matriz ---------- */
 function buildMatrix(key){
