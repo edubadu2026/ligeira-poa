@@ -158,6 +158,11 @@ h3{font-family:var(--sans);font-weight:700;font-size:1.15rem;margin:0 0 .4em}
 #event-area .event{background:#fff;border-left:0;border-top:6px solid var(--yellow);border-radius:4px;padding:1.6rem 1.8rem;box-shadow:0 18px 40px -22px rgba(27,37,48,.5);animation:carta .7s cubic-bezier(.2,.7,.2,1) both}
 @keyframes carta{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.env2,.env2 .flap,.env2 .seal{transition:none}#event-area .event{animation:none}}
+.dilema{background:#fff;border-top:6px solid var(--yellow);border-radius:4px;padding:1.6rem 1.8rem;margin:1.5rem 0 0 !important;max-width:var(--measure);box-shadow:0 18px 40px -22px rgba(27,37,48,.5);animation:carta .6s cubic-bezier(.2,.7,.2,1) both}
+.dilema .dg{font-family:var(--sans);font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin:0 0 .3rem}
+.dilema h3{font-family:var(--serif);font-size:1.7rem;font-weight:750;margin:0 0 .8rem}
+.dilema p{margin:0 0 1rem}
+.dilema p:last-child{margin-bottom:0}
 .envlock{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;margin-top:1rem}
 .envlock input{font:inherit;padding:.6rem .8rem;border:2px solid var(--ink);border-radius:4px;min-width:12rem;background:#fff}
 .envlock .err{color:#B3261E;font-size:.9rem}
@@ -329,6 +334,7 @@ footer .sig{font-family:var(--serif);font-size:1.2rem;font-style:italic}
     <nav aria-label="Capítulos">
       <a href="#inicio" data-view="inicio">Início</a>
       <a href="#capitulo-1" data-view="capitulo-1">Cap. 1: Stakeholders</a>
+      <a href="#capitulo-2" data-view="capitulo-2">Cap. 2: Escolhas</a>
     </nav>
   </div>
 </header>
@@ -370,6 +376,7 @@ footer .sig{font-family:var(--serif);font-size:1.2rem;font-style:italic}
       <h2>Capítulos</h2>
       <ol class="chapters">
         <li data-cap="1"><span class="cn">Capítulo 1</span><span class="ct">Os stakeholders da Ligeira</span></li>
+        <li data-cap="2"><span class="cn">Capítulo 2</span><span class="ct">As escolhas da Ligeira</span></li>
       </ol>
     </div>
   </section>
@@ -458,6 +465,33 @@ footer .sig{font-family:var(--serif);font-size:1.2rem;font-style:italic}
   </section>
 </div>
 
+
+<div id="view-capitulo-2" class="view hidden">
+  <section class="chap-head">
+    <div class="in">
+      <p class="num">Capítulo 2</p>
+      <h1>As escolhas da Ligeira</h1>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="prose">
+      <p class="lede">No começo de 2026, a Ligeira tinha um problema na mesa. O crédito continuava caro, o banco pedia mais garantias a cada renovação do capital de giro, e as garantias eram os apartamentos de Beatriz e Diego. Os dois dormiam sabendo que um ano ruim podia levar a casa onde moravam.</p>
+      <p>Foi nessa época que apareceu <strong>Tiago Medeiros</strong>. Tinha 47 anos e passara quinze como diretor de operações de uma grande rede varejista gaúcha, de onde saiu com dinheiro, uma agenda invejável e a fama de quem resolve. Gostava de dizer que aprendeu logística no chão do centro de distribuição, e não em sala de aula. Agora investia em pequenas empresas em que pudesse pôr a mão na massa. Conhecia o setor por dentro, falava a língua dos grandes clientes e tinha o telefone dos diretores certos. Propôs aportar <strong>R$ 1 milhão por 25%</strong> da Ligeira.</p>
+      <p>A conta fechava com folga. <strong>R$ 600 mil</strong> quitaram a linha de capital de giro, e os apartamentos de Beatriz e Diego saíram da garantia. Beatriz contou depois que foi a primeira noite em anos em que dormiu sem pensar no banco. Os outros <strong>R$ 400 mil</strong> foram para o caixa, como reserva para os meses apertados. Tiago ganhou uma mesa no galpão e a diretoria de Expansão. Em um mês, renegociou o aluguel do galpão. Em dois, abriu uma conversa direta com a diretoria da Lume, coisa que Beatriz tentava havia um ano. Era impossível não gostar dele.</p>
+      <p>No novo acordo de sócios, as decisões passaram a ser tomadas por maioria do capital. Beatriz e Diego ficaram com <strong>37,5%</strong> cada, e Tiago com <strong>25%</strong>. Nenhum dos três decide sozinho: qualquer decisão precisa de dois. Na prática, quando Beatriz e Diego discordam, quem desempata é Tiago.</p>
+      <p>Tiago nunca dizia que uma coisa era errada. Dizia que era o preço de continuar no jogo.</p>
+    </div>
+  </section>
+
+  <section class="section" id="dilema">
+    <div class="round">
+      <div class="round-head"><h2>Grupo</h2></div>
+      <div class="groups" id="groups2"></div>
+      <div id="dilema2-area"></div>
+    </div>
+  </section>
+</div>
 </main>
 
 <footer>
@@ -726,7 +760,8 @@ document.querySelectorAll("[data-reset]").forEach(b=>b.addEventListener("click",
 }));
 
 const LIBERACAO = {
-  1: "2026-11-18"
+  1: "2026-11-18",
+  2: "2026-11-19"
 };
 function capLiberado(n){
   if(unlocked) return true;
@@ -734,7 +769,7 @@ function capLiberado(n){
   return !!d && Date.now() >= new Date(d + "T00:00:00-03:00").getTime();
 }
 function renderLiberacao(){
-  for(let n=1;n<=1;n++){
+  for(let n=1;n<=2;n++){
     const ok = capLiberado(n);
     const a = document.querySelector(`.top nav a[data-view="capitulo-${n}"]`);
     if(a) a.hidden = !ok;
@@ -751,13 +786,13 @@ function renderLiberacao(){
 function route(){
   const v = location.hash.replace("#","") || "inicio";
   const ch1 = ["stakeholders","grupo","rodada-1","rodada-3","resumo","professor"];
-  let view = (v.startsWith("capitulo-1") || ch1.includes(v)) ? "capitulo-1" : "inicio";
+  let view = (v.startsWith("capitulo-2") || v==="dilema") ? "capitulo-2" : (v.startsWith("capitulo-1") || ch1.includes(v)) ? "capitulo-1" : "inicio";
   const nCap = view.startsWith("capitulo-") ? +view.split("-")[1] : 0;
   if(nCap && !capLiberado(nCap)) view = "inicio";
   renderLiberacao();
   document.querySelectorAll(".view").forEach(el=>el.classList.toggle("hidden", el.id!==`view-${view}`));
   document.querySelectorAll(".top nav a").forEach(a=>{ if(a.dataset.view===view) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
-  if(v==="inicio"||v==="capitulo-1") window.scrollTo(0,0); else { const t=document.getElementById(v); if(t) t.scrollIntoView(); }
+  if(v==="inicio"||v==="capitulo-1"||v==="capitulo-2") window.scrollTo(0,0); else { const t=document.getElementById(v); if(t) t.scrollIntoView(); }
 }
 window.addEventListener("hashchange", route);
 
@@ -780,6 +815,78 @@ function renderAll(){
 buildMatrix("r1"); buildMatrix("r3");
 renderAll();
 
+
+/* ---------- capítulo 2 ---------- */
+const DILEMAS2 = [
+ {
+  "t": "O calor",
+  "p": [
+   "Numa tarde de fevereiro, com 39 graus em Porto Alegre, Valdir Rosa, 47 anos, entregador da Ligeira havia quatro anos, desmaiou numa calçada da Avenida Ipiranga depois de oito horas sem achar água nem sombra. Nenhum restaurante da região deixa entregador usar o banheiro. Valdir está internado em estado grave, e o verão está só começando.",
+   "A associação de entregadores pediu um ponto de apoio, com banheiro, água, sombra, lugar para sentar e tomada para o celular.",
+   "Diego explicou por que não é simples. “O galpão do Partenon está todo ocupado com a triagem. Tirar 80 metros quadrados dali custa uns 150 pedidos por dia, quase <strong>R$ 470 mil</strong> de receita por ano. Ponto de apoio, só fora do galpão.”",
+   "Beatriz fez a conta dela. “Três pontos pequenos: no Centro, na Zona Norte e em Canoas, onde eles trabalham. Cerca de <strong>R$ 260 mil</strong> no primeiro ano, 65% da nossa reserva.”",
+   "Diego apresentou outra. “Um ponto só, ao lado do galpão. <strong>R$ 170 mil</strong> no primeiro ano. Mas serve a uns 50 dos 220, os que trabalham por perto.”",
+   "Tiago não gostou de nenhuma. “Trinta reais por entregador por mês, em dinheiro. São <strong>R$ 79 mil</strong> por ano. Cada um resolve onde quiser. Autônomo é autônomo.” Diego completou com os fatos: “Ninguém garante que o dinheiro vira água e sombra.”"
+  ]
+ },
+ {
+  "t": "Quem não para",
+  "p": [
+   "Às quatro da manhã, o vigia do galpão encontrou Sidnei Prado, 44 anos, dormindo sentado na moto, de capacete, no estacionamento. O aplicativo mostrava dezesseis horas conectado. Quando acordou, Sidnei pediu desculpas e disse que precisava fechar o mês: a filha começava a faculdade.",
+   "Diego abriu o painel. Na semana anterior, <strong>31 entregadores</strong> passaram de doze horas conectados em pelo menos três dias. Desses, 22 só trabalham para a Ligeira, e os 31 fazem uma em cada cinco entregas do dia. Na mesma semana, chegou o questionário social da Lume: qual é a jornada máxima permitida no aplicativo? Hoje, nenhuma. Sem uma política em quinze dias, a Lume avalia tirar a Ligeira do seu programa de fornecedores responsáveis.",
+   "Beatriz foi a primeira. “Dez horas. Depois disso, o risco de acidente dobra. Eu não quero descobrir depois que a gente sabia.” Diego fez o preço. “Um bloqueio em dez horas tira uns 100 pedidos por dia, uns <strong>R$ 310 mil</strong> de receita por ano. E os 22 que dependem só da gente perdem uns R$ 1.000 por mês.”",
+   "Diego tinha uma saída mais barata. “Doze horas, com um adicional por entrega aos 31 por seis meses, para a renda não despencar de uma vez. Uns <strong>R$ 150 mil</strong> no total. Mas o risco entre dez e doze horas continua, e a Lume só dá metade dos pontos.”",
+   "Tiago foi o mais curto. “Um aviso na tela depois de doze horas e um termo assinado por cada um, dizendo que foi avisado. Não custa nada.” O advogado da Ligeira avisou: “Se acontecer um acidente, esse termo prova que a empresa sabia.”"
+  ]
+ },
+ {
+  "t": "Quando o entregador envelhece",
+  "p": [
+   "Raimundo Alves, 52 anos, entrega para a Ligeira desde 2019. A dor na coluna piora a cada inverno. O médico mandou parar por quatro meses. Raimundo nunca contribuiu para o INSS, porque ninguém exigiu e o dinheiro nunca sobrava, então não tem nenhum auxílio. Foi falar com Beatriz sem pedir nada. Só perguntou: “Se eu parar, a empresa me espera quanto tempo?”",
+   "Na mesma semana, a Vai Já, concorrente da Ligeira, anunciou à imprensa um auxílio de saúde para o entregador que precisar parar. Em duas semanas, <strong>16 entregadores</strong> com mais de dois anos de casa pediram desligamento. Seis disseram com todas as letras que iam para a Vai Já. Os outros dez não disseram nada. Juntos, eles respondiam por uns <strong>R$ 340 mil</strong> de receita por ano.",
+   "Beatriz foi direta. “Contribuição para os 220. Uns R$ 80 por pessoa por mês, <strong>R$ 210 mil</strong> por ano, metade da reserva. É o que a gente deve a quem sustenta a operação.” O advogado avisou de outro risco: “Dar benefício a quem é autônomo pode ser usado depois como argumento de vínculo de emprego.”",
+   "Diego tinha um caminho menor. “Só para quem tem 45 anos ou mais e mais de dois anos de casa. São uns 30, <strong>R$ 29 mil</strong> por ano. Mas deixa 190 de fora, incluindo os de 30 anos, que também vão envelhecer.”",
+   "Tiago já sabia o que fazer. “A gente espera para ver quantos usam o auxílio da Vai Já. Se funcionar, copia. Se a gente abre isso agora, não fecha mais.”"
+  ]
+ },
+ {
+  "t": "A nota",
+  "p": [
+   "Wilner Joseph, 34 anos, era engenheiro civil no Haiti. Em Porto Alegre, entrega para a Ligeira há três anos. Um dia, levou a Beatriz uma folha impressa com as avaliações que tinha recebido no mês. Entre as notas baixas, os comentários: “Não entendi nada do que ele falou.” “Preferia alguém daqui.” E outros piores, que Beatriz não conseguiu ler até o fim. “Eu nunca atrasei uma entrega”, disse ele. “Mas agora o aplicativo me dá as piores corridas.”",
+   "Diego cruzou os dados naquela noite. A Ligeira tem <strong>41 entregadores imigrantes</strong>, a maioria haitianos e venezuelanos. Eles são tão pontuais quanto os outros e têm menos reclamações de extravio. Mas recebem dos clientes uma nota média de 4,1, contra 4,6 dos demais. Como o algoritmo que Diego escreveu distribui as melhores corridas pela nota, os imigrantes ganham <strong>22% menos</strong> por hora trabalhada.",
+   "Beatriz não hesitou. “Tira a nota do cliente do algoritmo. A gente distribui as corridas por pontualidade e extravio, que são dados, e não opinião.” Diego fez as contas. “São três meses de trabalho da equipe, uns <strong>R$ 90 mil</strong>. E o contrato com a Lume diz que a gente tem de usar a avaliação do consumidor na gestão dos entregadores. Teria de renegociar.”",
+   "Diego tinha outra saída. “Mantenho a nota, mas descarto as avaliações com comentários ofensivos e corrijo a média dos imigrantes. Uns <strong>R$ 30 mil</strong>. Só que aí sou eu decidindo quem merece correção, e o cliente continua dando nota pela cor e pelo sotaque.”",
+   "Tiago achou que estavam complicando. “O algoritmo é neutro. Quem dá a nota é o cliente, e o cliente tem sempre razão. A gente paga um curso de português para eles, uns <strong>R$ 12 mil</strong>, e todo mundo sai ganhando.”"
+  ]
+ },
+ {
+  "t": "A conta de outra pessoa",
+  "p": [
+   "Num sábado à noite, uma mulher chegou ao galpão com o filho de 16 anos pela mão. Havia quatro meses, o menino fazia entregas com a conta do tio, que ficava com um terço do que ele ganhava. Ela só descobriu porque a escola ligou para dizer que ele não aparecia mais. “Vocês nunca viram que não era ele?”, perguntou a Beatriz, alto, na frente da equipe do turno.",
+   "Diego passou o domingo nos registros. Encontrou <strong>25 contas</strong> com sinais de uso por outra pessoa: aparelhos diferentes, horários impossíveis, rotas em cidades distantes no mesmo dia. Alugar a conta é comum no setor. Quem aluga costuma ser quem não conseguiria se cadastrar: menores de idade, imigrantes sem documentos, gente com a carteira de motorista suspensa.",
+   "Beatriz queria acabar com aquilo. “Reconhecimento facial a cada vez que alguém entra no aplicativo. E quem for maior de idade e estiver usando a conta de outro ganha a chance de ter um cadastro próprio.” Diego mediu o impacto. “A tecnologia é barata, uns <strong>R$ 25 mil</strong> por ano. O caro é o resto: as 25 contas fazem uns 150 pedidos por dia, <strong>R$ 470 mil</strong> por ano. E quem aluga, que já é quem tem menos, perde a única renda que tem.”",
+   "Diego tinha uma versão mais leve. “Verificação em um a cada dez acessos, sorteado. Bloqueio só os casos claros. Perco uns 50 pedidos por dia, <strong>R$ 160 mil</strong> por ano. Mas algum menino ainda vai passar.”",
+   "Tiago não viu dilema nenhum. “O contrato diz que a conta é pessoal e intransferível. A responsabilidade é do titular. A gente manda um e-mail lembrando a regra e segue.” A mãe tinha deixado o telefone com Beatriz. Disse que, se nada mudasse, ia procurar o Conselho Tutelar."
+  ]
+ }
+];
+let group2 = null;
+try{ const g = localStorage.getItem(BASE+"-grupo2"); if(g) group2 = +g; }catch(e){}
+function renderGroups2(){
+  const box = document.getElementById("groups2");
+  box.innerHTML = [1,2,3,4,5].map(n=>`<button type="button" class="gbtn" data-g2="${n}" aria-pressed="${group2===n}">Grupo ${n}</button>`).join("");
+  box.querySelectorAll("[data-g2]").forEach(b=>b.addEventListener("click",()=>{
+    group2 = +b.dataset.g2; try{ localStorage.setItem(BASE+"-grupo2", String(group2)); }catch(e){}
+    renderGroups2(); renderDilema2();
+  }));
+}
+function renderDilema2(){
+  const area = document.getElementById("dilema2-area");
+  if(!group2){ area.innerHTML = ""; return; }
+  const d = DILEMAS2[group2-1];
+  area.innerHTML = `<article class="dilema"><p class="dg">Grupo ${group2}</p><h3>${d.t}</h3>${d.p.map(x=>`<p>${x}</p>`).join("")}</article>`;
+}
+renderGroups2(); renderDilema2();
 route();
 </script>
 </body>
