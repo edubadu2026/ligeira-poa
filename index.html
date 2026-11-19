@@ -102,8 +102,8 @@ h3{font-family:var(--sans);font-weight:700;font-size:1.15rem;margin:0 0 .4em}
 .matrix-wrap{font-family:var(--sans)}
 .tray{background:var(--paper-2);padding:1rem;border-radius:4px;margin-bottom:1rem;min-height:4rem}
 .tray-label{font-size:.85rem;color:var(--ink-2);margin:0 0 .5rem}
-.chips{display:flex;flex-wrap:wrap;gap:.45rem}
-.chip{font:inherit;font-size:.88rem;background:#fff;color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:.35rem .75rem;cursor:grab;line-height:1.2}
+.chips{display:flex;flex-wrap:wrap;gap:.55rem}
+.chip{font:inherit;font-size:.95rem;background:#fff;color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:.5rem .9rem;cursor:grab;line-height:1.2}
 .chip.sel{background:var(--yellow);box-shadow:0 0 0 3px var(--ink)}
 .chip.ok{border-color:var(--green);background:#E3F1E9}
 .chip.nok{border-color:var(--red);background:#F6E1DC}
@@ -113,10 +113,10 @@ h3{font-family:var(--sans);font-weight:700;font-size:1.15rem;margin:0 0 .4em}
 .axis-x{grid-row:2;grid-column:2;display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:.9rem}
 .axis-y small,.axis-x small{font-weight:400;color:var(--ink-2)}
 .grid{grid-row:1;grid-column:2;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:4px;background:var(--ink);border:4px solid var(--ink)}
-.quad{background:#fff;min-height:11rem;padding:.8rem;cursor:pointer;display:flex;flex-direction:column;gap:.6rem}
+.quad{background:#fff;min-height:17rem;padding:1rem 1.1rem;cursor:pointer;display:flex;flex-direction:column;gap:.6rem}
 .quad:hover{background:#FFFBEA}
 .quad.drop{background:var(--yellow-soft)}
-.qname{font-weight:700;font-size:1.05rem}
+.qname{display:block;font-weight:700;font-size:.95rem;line-height:1.25;letter-spacing:.01em;color:var(--ink-2)}
 .qsub{font-size:.8rem;color:var(--ink-2);display:block}
 .row-actions{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem}
 .btn{font-family:var(--sans);font-size:.95rem;font-weight:600;border:2px solid var(--ink);background:var(--ink);color:#fff;padding:.55rem 1rem;border-radius:4px;cursor:pointer}
@@ -221,7 +221,9 @@ footer .sig{font-family:var(--serif);font-size:1.2rem;font-style:italic}
   body{font-size:1.06rem}
   .hrow{grid-template-columns:1fr auto;}
   .hrow .bar{grid-column:1 / -1}
-  .quad{min-height:8rem;padding:.6rem}
+  .quad{min-height:12rem;padding:.6rem}
+  .qname{font-size:.8rem}
+  .chip{font-size:.85rem;padding:.4rem .7rem}
   .matrix{grid-template-columns:1.6rem 1fr}
   .hero svg.route{opacity:.4}
 }
@@ -470,10 +472,10 @@ footer .sig{font-family:var(--serif);font-size:1.2rem;font-style:italic}
 const PROF_CODE = "LIGEIRAPOA";
 
 const QUADS = {
-  AP_BI:{name:"Satisfazer", sub:"Alto poder, baixo interesse"},
-  AP_AI:{name:"Gerenciar de perto", sub:"Alto poder, alto interesse"},
-  BP_BI:{name:"Monitorar", sub:"Baixo poder, baixo interesse"},
-  BP_AI:{name:"Informar", sub:"Baixo poder, alto interesse"}
+  AP_BI:{name:"Alto poder, baixo interesse"},
+  AP_AI:{name:"Alto poder, alto interesse"},
+  BP_BI:{name:"Baixo poder, baixo interesse"},
+  BP_AI:{name:"Baixo poder, alto interesse"}
 };
 const QUAD_ORDER = ["AP_BI","AP_AI","BP_BI","BP_AI"];
 
@@ -590,7 +592,7 @@ function buildMatrix(key){
       <div class="axis-y"><small>baixo</small>Poder<small>alto</small></div>
       <div class="grid">
         ${QUAD_ORDER.map(q=>`<div class="quad" data-q="${q}" tabindex="0" role="button" aria-label="Posicionar em ${QUADS[q].name}">
-          <div><span class="qname">${QUADS[q].name}</span><span class="qsub">${QUADS[q].sub}</span></div>
+          <div><span class="qname">${QUADS[q].name}</span></div>
           <div class="chips"></div></div>`).join("")}
       </div>
       <div class="axis-x"><small>baixo</small>Interesse<small>alto</small></div>
@@ -695,9 +697,9 @@ function renderAnswers(){
   if(!unlocked) return;
   document.getElementById("lock").classList.add("hidden");
   const a=document.getElementById("answers"); a.classList.remove("hidden");
-  a.innerHTML = `<h3>Gabarito</h3><p class="note">Critério: o poder mede quanto a Ligeira depende do stakeholder; o interesse, quanto a vida dele depende do que a Ligeira faz. Os stakeholders em verde na matriz acima estão na posição do gabarito; em vermelho, não. Nenhum stakeholder ficou em Monitorar: isso diz algo sobre a Ligeira?</p>
+  a.innerHTML = `<h3>Gabarito</h3><p class="note">Critério: o poder mede quanto a Ligeira depende do stakeholder; o interesse, quanto a vida dele depende do que a Ligeira faz. Os stakeholders em verde na matriz acima estão na posição do gabarito; em vermelho, não. Nenhum stakeholder ficou em baixo poder e baixo interesse: isso diz algo sobre a Ligeira?</p>
   <div class="table-scroll"><table><thead><tr><th>Stakeholder</th><th>Quadrante</th><th>Justificativa</th></tr></thead><tbody>` +
-   S.map(s=>`<tr><td>${s.e} ${s.n}</td><td>${QUADS[s.q].sub}${s.debate?'<span class="tag">em debate</span>':""}${s.mover?'<span class="tag">pode mudar</span>':""}</td><td>${s.j}</td></tr>`).join("") +
+   S.map(s=>`<tr><td>${s.e} ${s.n}</td><td>${QUADS[s.q].name}${s.debate?'<span class="tag">em debate</span>':""}${s.mover?'<span class="tag">pode mudar</span>':""}</td><td>${s.j}</td></tr>`).join("") +
    `</tbody></table></div>`;
   document.getElementById("professor").classList.remove("hidden");
   document.getElementById("prof-notes").innerHTML = `<div class="table-scroll"><table><thead><tr><th>Evento</th><th>Movimento esperado</th><th>Ponto de discussão</th></tr></thead><tbody>` +
