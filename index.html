@@ -186,7 +186,14 @@ h3{font-family:var(--sans);font-weight:700;font-size:1.15rem;margin:0 0 .4em}
 .op .who{display:flex;align-items:center;gap:.7rem}
 .op .who img{width:54px;height:54px;border-radius:50%}
 .op .who b{font-size:1.05rem}
-.op q{font-family:var(--serif);font-style:italic;font-size:1.08rem;line-height:1.5;quotes:"“" "”"}
+.op .fala{font-family:var(--serif);font-size:1.12rem;line-height:1.55;margin:0}
+.op .who span.lead{display:block;font-size:.85rem;color:var(--ink-2);font-style:italic;font-family:var(--serif)}
+.reply{display:flex;gap:.6rem;align-items:flex-start;background:#FFF4D6;border-radius:6px;padding:.7rem .8rem}
+.reply img,.reply .advpic{width:34px;height:34px;border-radius:50%;flex:none}
+.reply .advpic{display:flex;align-items:center;justify-content:center;background:#fff;font-size:1.1rem}
+.reply .lead{display:block;font-size:.82rem;color:#5A3A12;font-weight:600}
+.reply p{margin:.15rem 0 0;font-family:var(--serif);font-size:1rem;line-height:1.45;color:#3B2A12}
+.op .cost b{font-size:1.5rem !important}
 .op .cost{margin-top:auto;border-top:1px solid #D8DAD6;padding-top:.8rem}
 .op .cost b{display:block;font-family:var(--serif);font-size:2rem;font-weight:750;line-height:1}
 .op .cost span{font-size:.85rem;color:var(--ink-2)}
@@ -871,21 +878,27 @@ const DILEMAS2 = [
   ],
   "op": [
    {
-    "q": "Três pontos pequenos: no Centro, na Zona Norte e em Canoas, onde eles trabalham.",
+    "lead": "Beatriz fez a conta dela.",
+    "q": "Três pontos pequenos: no Centro, na Zona Norte e em Canoas, onde eles trabalham. Cerca de <strong>R$ 260 mil</strong> no primeiro ano, 65% da nossa reserva.",
     "c": "R$ 260 mil",
-    "cs": "no 1º ano · 65% da reserva"
+    "cs": "no 1º ano"
    },
    {
-    "q": "Um ponto só, ao lado do galpão.",
+    "lead": "Diego apresentou outra.",
+    "q": "Um ponto só, ao lado do galpão. <strong>R$ 170 mil</strong> no primeiro ano. Mas serve a uns 50 dos 220, os que trabalham por perto.",
     "c": "R$ 170 mil",
-    "cs": "no 1º ano",
-    "m": "Serve a uns 50 dos 220, os que trabalham por perto."
+    "cs": "no 1º ano"
    },
    {
-    "q": "Trinta reais por entregador por mês, em dinheiro. Cada um resolve onde quiser. Autônomo é autônomo.",
+    "lead": "Tiago não gostou de nenhuma.",
+    "q": "Trinta reais por entregador por mês, em dinheiro. São <strong>R$ 79 mil</strong> por ano. Cada um resolve onde quiser. Autônomo é autônomo.",
     "c": "R$ 79 mil",
     "cs": "por ano",
-    "m": "Ninguém garante que o dinheiro vira água e sombra."
+    "r": {
+     "who": "diego",
+     "lead": "Diego completou com os fatos:",
+     "t": "Ninguém garante que o dinheiro vira água e sombra."
+    }
    }
   ]
  },
@@ -897,22 +910,32 @@ const DILEMAS2 = [
   ],
   "op": [
    {
+    "lead": "Beatriz foi a primeira.",
     "q": "Dez horas. Depois disso, o risco de acidente dobra. Eu não quero descobrir depois que a gente sabia.",
     "c": "R$ 310 mil",
-    "cs": "por ano em pedidos",
-    "m": "Os 22 que dependem só da Ligeira perdem uns R$ 1.000 por mês."
+    "cs": "por ano",
+    "r": {
+     "who": "diego",
+     "lead": "Diego fez o preço:",
+     "t": "Um bloqueio em dez horas tira uns 100 pedidos por dia, uns <strong>R$ 310 mil</strong> de receita por ano. E os 22 que dependem só da gente perdem uns R$ 1.000 por mês."
+    }
    },
    {
-    "q": "Doze horas, com um adicional por entrega aos 31 por seis meses, para a renda não despencar de uma vez.",
+    "lead": "Diego tinha uma saída mais barata.",
+    "q": "Doze horas, com um adicional por entrega aos 31 por seis meses, para a renda não despencar de uma vez. Uns <strong>R$ 150 mil</strong> no total. Mas o risco entre dez e doze horas continua, e a Lume só dá metade dos pontos.",
     "c": "R$ 150 mil",
-    "cs": "no total",
-    "m": "O risco entre dez e doze horas continua, e a Lume só dá metade dos pontos."
+    "cs": "no total"
    },
    {
-    "q": "Um aviso na tela depois de doze horas e um termo assinado por cada um, dizendo que foi avisado.",
+    "lead": "Tiago foi o mais curto.",
+    "q": "Um aviso na tela depois de doze horas e um termo assinado por cada um, dizendo que foi avisado. Não custa nada.",
     "c": "R$ 0",
-    "cs": "não custa nada",
-    "m": "Se acontecer um acidente, esse termo prova que a empresa sabia."
+    "cs": "",
+    "r": {
+     "who": "advogado",
+     "lead": "O advogado da Ligeira avisou:",
+     "t": "Se acontecer um acidente, esse termo prova que a empresa sabia."
+    }
    }
   ]
  },
@@ -924,18 +947,24 @@ const DILEMAS2 = [
   ],
   "op": [
    {
-    "q": "Contribuição para os 220. Uns R$ 80 por pessoa por mês. É o que a gente deve a quem sustenta a operação.",
+    "lead": "Beatriz foi direta.",
+    "q": "Contribuição para os 220. Uns R$ 80 por pessoa por mês, <strong>R$ 210 mil</strong> por ano, metade da reserva. É o que a gente deve a quem sustenta a operação.",
     "c": "R$ 210 mil",
-    "cs": "por ano · metade da reserva",
-    "m": "Dar benefício a quem é autônomo pode ser usado depois como argumento de vínculo de emprego."
-   },
-   {
-    "q": "Só para quem tem 45 anos ou mais e mais de dois anos de casa. São uns 30.",
-    "c": "R$ 29 mil",
     "cs": "por ano",
-    "m": "Deixa 190 de fora, incluindo os de 30 anos, que também vão envelhecer."
+    "r": {
+     "who": "advogado",
+     "lead": "O advogado avisou de outro risco:",
+     "t": "Dar benefício a quem é autônomo pode ser usado depois como argumento de vínculo de emprego."
+    }
    },
    {
+    "lead": "Diego tinha um caminho menor.",
+    "q": "Só para quem tem 45 anos ou mais e mais de dois anos de casa. São uns 30, <strong>R$ 29 mil</strong> por ano. Mas deixa 190 de fora, incluindo os de 30 anos, que também vão envelhecer.",
+    "c": "R$ 29 mil",
+    "cs": "por ano"
+   },
+   {
+    "lead": "Tiago já sabia o que fazer.",
     "q": "A gente espera para ver quantos usam o auxílio da Vai Já. Se funcionar, copia. Se a gente abre isso agora, não fecha mais.",
     "c": "R$ 0",
     "cs": "por enquanto"
@@ -950,19 +979,25 @@ const DILEMAS2 = [
   ],
   "op": [
    {
+    "lead": "Beatriz não hesitou.",
     "q": "Tira a nota do cliente do algoritmo. A gente distribui as corridas por pontualidade e extravio, que são dados, e não opinião.",
     "c": "R$ 90 mil",
-    "cs": "três meses de trabalho",
-    "m": "O contrato com a Lume exige usar a avaliação do consumidor. Teria de renegociar."
+    "cs": "e um contrato a renegociar",
+    "r": {
+     "who": "diego",
+     "lead": "Diego fez as contas:",
+     "t": "São três meses de trabalho da equipe, uns <strong>R$ 90 mil</strong>. E o contrato com a Lume diz que a gente tem de usar a avaliação do consumidor na gestão dos entregadores. Teria de renegociar."
+    }
    },
    {
-    "q": "Mantenho a nota, mas descarto as avaliações com comentários ofensivos e corrijo a média dos imigrantes.",
+    "lead": "Diego tinha outra saída.",
+    "q": "Mantenho a nota, mas descarto as avaliações com comentários ofensivos e corrijo a média dos imigrantes. Uns <strong>R$ 30 mil</strong>. Só que aí sou eu decidindo quem merece correção, e o cliente continua dando nota pela cor e pelo sotaque.",
     "c": "R$ 30 mil",
-    "cs": "",
-    "m": "É Diego decidindo quem merece correção, e o cliente continua dando nota pela cor e pelo sotaque."
+    "cs": ""
    },
    {
-    "q": "O algoritmo é neutro. Quem dá a nota é o cliente, e o cliente tem sempre razão. A gente paga um curso de português para eles, e todo mundo sai ganhando.",
+    "lead": "Tiago achou que estavam complicando.",
+    "q": "O algoritmo é neutro. Quem dá a nota é o cliente, e o cliente tem sempre razão. A gente paga um curso de português para eles, uns <strong>R$ 12 mil</strong>, e todo mundo sai ganhando.",
     "c": "R$ 12 mil",
     "cs": ""
    }
@@ -977,18 +1012,24 @@ const DILEMAS2 = [
   ],
   "op": [
    {
+    "lead": "Beatriz queria acabar com aquilo.",
     "q": "Reconhecimento facial a cada vez que alguém entra no aplicativo. E quem for maior de idade e estiver usando a conta de outro ganha a chance de ter um cadastro próprio.",
     "c": "R$ 495 mil",
-    "cs": "R$ 25 mil de tecnologia + R$ 470 mil em pedidos por ano",
-    "m": "Quem aluga, que já é quem tem menos, perde a única renda que tem."
+    "cs": "por ano",
+    "r": {
+     "who": "diego",
+     "lead": "Diego mediu o impacto:",
+     "t": "A tecnologia é barata, uns <strong>R$ 25 mil</strong> por ano. O caro é o resto: as 25 contas fazem uns 150 pedidos por dia, <strong>R$ 470 mil</strong> por ano. E quem aluga, que já é quem tem menos, perde a única renda que tem."
+    }
    },
    {
-    "q": "Verificação em um a cada dez acessos, sorteado. Bloqueio só os casos claros.",
+    "lead": "Diego tinha uma versão mais leve.",
+    "q": "Verificação em um a cada dez acessos, sorteado. Bloqueio só os casos claros. Perco uns 50 pedidos por dia, <strong>R$ 160 mil</strong> por ano. Mas algum menino ainda vai passar.",
     "c": "R$ 160 mil",
-    "cs": "por ano em pedidos",
-    "m": "Algum menino ainda vai passar."
+    "cs": "por ano"
    },
    {
+    "lead": "Tiago não viu dilema nenhum.",
     "q": "O contrato diz que a conta é pessoal e intransferível. A responsabilidade é do titular. A gente manda um e-mail lembrando a regra e segue.",
     "c": "R$ 0",
     "cs": ""
@@ -1011,12 +1052,13 @@ function renderDilema2(){
   if(!group2){ area.innerHTML = ""; return; }
   const d = DILEMAS2[group2-1];
   const who = [["beatriz","Beatriz"],["diego","Diego"],["tiago","Tiago"]];
+  const pic = w => w==="advogado" ? `<span class="advpic" aria-hidden="true">⚖️</span>` : `<img src="img/${w}.jpg" alt="">`;
   area.innerHTML = `<article class="dilema wide"><p class="dg">Grupo ${group2}</p><h3>${d.t}</h3>
     <div class="sit">${d.sit.map(x=>`<p>${x}</p>`).join("")}</div>
     <div class="ops">${d.op.map((o,i)=>`<div class="op ${who[i][0]}">
-      <div class="who"><img src="img/${who[i][0]}.jpg" alt=""><b>${who[i][1]}</b></div>
-      <q>${o.q}</q>
-      ${o.m?`<p class="mas">${o.m}</p>`:""}
+      <div class="who"><img src="img/${who[i][0]}.jpg" alt=""><div><b>${who[i][1]}</b><span class="lead">${o.lead}</span></div></div>
+      <p class="fala">“${o.q}”</p>
+      ${o.r?`<div class="reply">${pic(o.r.who)}<div><span class="lead">${o.r.lead}</span><p>“${o.r.t}”</p></div></div>`:""}
       <div class="cost"><b>${o.c}</b><span>${o.cs||""}</span></div></div>`).join("")}</div></article>`;
 }
 renderGroups2(); renderDilema2();
